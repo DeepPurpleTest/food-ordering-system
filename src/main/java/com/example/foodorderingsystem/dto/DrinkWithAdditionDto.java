@@ -16,12 +16,14 @@ import org.springframework.lang.Nullable;
 @Jacksonized
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DrinkAdditionDto {
+public class DrinkWithAdditionDto {
 	@Nullable
 	Long id;
 	@NotNull
 	Long drinkId;
 	@NotNull
-	Long additionId;
+	boolean hasLemon;
 
+	@NotNull
+	boolean hasIce;
 }

@@ -1,7 +1,7 @@
 package com.example.foodorderingsystem.controller;
 
-import com.example.foodorderingsystem.dto.AdditionDto;
-import com.example.foodorderingsystem.entity.Addition;
+import com.example.foodorderingsystem.dto.DrinkWithAdditionDto;
+import com.example.foodorderingsystem.entity.DrinkWithAddition;
 import com.example.foodorderingsystem.service.CrudService;
 import com.example.foodorderingsystem.util.exception.EntityValidationException;
 import com.example.foodorderingsystem.util.mapper.Mapper;
@@ -22,48 +22,48 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addition")
+@RequestMapping("/{orderId}/drink-addition")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AdditionController {
-	CrudService<Addition> additionService;
-	Mapper<Addition, AdditionDto> additionMapper;
+public class DrinkWithAdditionController {
+	CrudService<DrinkWithAddition> drinkAdditionService;
+	Mapper<DrinkWithAddition, DrinkWithAdditionDto> drinkAdditionMapper;
 
 	@GetMapping("/all")
-	public List<AdditionDto> getAll() {
-		return additionService.findAll().stream()
-				.map(additionMapper::mapToDto)
+	public List<DrinkWithAdditionDto> getAll() {
+		return drinkAdditionService.findAll().stream()
+				.map(drinkAdditionMapper::mapToDto)
 				.toList();
 	}
 	@GetMapping("/{id}")
-	public AdditionDto getOne(@PathVariable Long id) {
-		return additionMapper.mapToDto(additionService.findOne(id));
+	public DrinkWithAdditionDto getOne(@PathVariable Long id) {
+		return drinkAdditionMapper.mapToDto(drinkAdditionService.findOne(id));
 	}
 
 	@PostMapping("/create")
-	public AdditionDto create(@RequestBody @Valid AdditionDto additionDto,
-							 BindingResult bindingResult) {
+	public DrinkWithAdditionDto create(@RequestBody @Valid DrinkWithAdditionDto drinkWithAdditionDto,
+									   BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new EntityValidationException("Addition validation exception");
 		}
 
-		Addition addition = additionMapper.mapToEntity(additionDto);
-		return additionMapper.mapToDto(additionService.create(addition));
+		DrinkWithAddition drinkWithAddition = drinkAdditionMapper.mapToEntity(drinkWithAdditionDto);
+		return drinkAdditionMapper.mapToDto(drinkAdditionService.create(drinkWithAddition));
 	}
 
 	@PatchMapping("/update")
-	public AdditionDto update(@RequestBody @Valid AdditionDto additionDto,
-							 BindingResult bindingResult) {
+	public DrinkWithAdditionDto update(@RequestBody @Valid DrinkWithAdditionDto drinkWithAdditionDto,
+									   BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new EntityValidationException("Addition validation exception");
 		}
 
-		Addition addition = additionMapper.mapToEntity(additionDto);
-		return additionMapper.mapToDto(additionService.update(addition));
+		DrinkWithAddition drinkWithAddition = drinkAdditionMapper.mapToEntity(drinkWithAdditionDto);
+		return drinkAdditionMapper.mapToDto(drinkAdditionService.update(drinkWithAddition));
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public AdditionDto delete(@PathVariable Long id) {
-		return additionMapper.mapToDto(additionService.delete(id));
+	public DrinkWithAdditionDto delete(@PathVariable Long id) {
+		return drinkAdditionMapper.mapToDto(drinkAdditionService.delete(id));
 	}
 }

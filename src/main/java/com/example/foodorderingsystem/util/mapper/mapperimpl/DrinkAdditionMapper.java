@@ -1,33 +1,30 @@
 package com.example.foodorderingsystem.util.mapper.mapperimpl;
 
-import com.example.foodorderingsystem.dto.DrinkAdditionDto;
-import com.example.foodorderingsystem.entity.Addition;
+import com.example.foodorderingsystem.dto.DrinkWithAdditionDto;
 import com.example.foodorderingsystem.entity.Drink;
-import com.example.foodorderingsystem.entity.DrinkAddition;
+import com.example.foodorderingsystem.entity.DrinkWithAddition;
 import com.example.foodorderingsystem.util.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DrinkAdditionMapper implements Mapper<DrinkAddition, DrinkAdditionDto> {
+public class DrinkAdditionMapper implements Mapper<DrinkWithAddition, DrinkWithAdditionDto> {
 	@Override
-	public DrinkAdditionDto mapToDto(DrinkAddition entity) {
-		return DrinkAdditionDto.builder()
-				.id(entity.getId())
+	public DrinkWithAdditionDto mapToDto(DrinkWithAddition entity) {
+		return DrinkWithAdditionDto.builder()
 				.drinkId(entity.getDrink().getId())
-				.additionId(entity.getAddition().getId())
+				.hasLemon(entity.isHasLemon())
+				.hasIce(entity.isHasIce())
 				.build();
 	}
 
 	@Override
-	public DrinkAddition mapToEntity(DrinkAdditionDto dto) {
-		return DrinkAddition.builder()
-				.id(dto.getAdditionId())
+	public DrinkWithAddition mapToEntity(DrinkWithAdditionDto dto) {
+		return DrinkWithAddition.builder()
 				.drink(Drink.builder()
 						.id(dto.getDrinkId())
 						.build())
-				.addition(Addition.builder()
-						.id(dto.getId())
-						.build())
+				.hasIce(dto.isHasIce())
+				.hasLemon(dto.isHasLemon())
 				.build();
 	}
 }

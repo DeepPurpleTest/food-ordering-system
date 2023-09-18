@@ -67,4 +67,9 @@ public class LunchServiceImpl implements LunchService {
 
 		return byId.get();
 	}
+
+	@Override
+	public Optional<Lunch> findById(Long id) {
+		return lunchRepository.findById(id);
+	}
 }

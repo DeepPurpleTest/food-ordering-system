@@ -41,5 +41,6 @@ public class Drink {
 	BigDecimal price;
 
 	@OneToMany(mappedBy = "drink")
-	List<DrinkAddition> drinkAdditions;
+	@ToString.Exclude
+	List<DrinkWithAddition> drinkWithAdditions;
 }

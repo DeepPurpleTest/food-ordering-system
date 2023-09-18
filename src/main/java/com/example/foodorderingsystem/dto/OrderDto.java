@@ -25,5 +25,5 @@ public class OrderDto {
 	Long lunchId;
 
 	@Nullable
-	Long drinkAdditionId;
+	DrinkWithAdditionDto drinkWithAddition;
 }

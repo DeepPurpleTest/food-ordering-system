@@ -12,6 +12,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 public class OrderValidation implements ConstraintValidator<LunchOrDrinkConstraint, OrderDto> {
 	@Override
 	public boolean isValid(OrderDto orderDto, ConstraintValidatorContext constraintValidatorContext) {
-		return orderDto.getLunchId() != null || orderDto.getDrinkAdditionId() != null;
+		return orderDto.getLunchId() != null || orderDto.getDrinkWithAddition() != null;
 	}
 }

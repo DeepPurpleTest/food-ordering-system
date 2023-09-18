@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +19,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "addition")
+@Table(name = "drink_addition")
 @Getter
 @Setter
 @Builder
@@ -24,15 +27,21 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Addition {
+public class DrinkWithAddition {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 
-	@Column(name = "lemon")
-	Boolean lemon;
+	@ManyToOne
+	@JoinColumn(name = "drink_id", referencedColumnName = "id")
+	Drink drink;
 
-	@Column(name = "ice")
-	Boolean ice;
+	@OneToOne
+	Order order;
+
+	@Column(name = "has_lemon")
+	boolean hasLemon;
+	@Column(name = "has_ice")
+	boolean hasIce;
 }

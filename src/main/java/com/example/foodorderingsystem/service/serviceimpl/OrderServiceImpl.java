@@ -1,7 +1,13 @@
 package com.example.foodorderingsystem.service.serviceimpl;
 
+import com.example.foodorderingsystem.entity.Drink;
+import com.example.foodorderingsystem.entity.DrinkWithAddition;
+import com.example.foodorderingsystem.entity.Lunch;
 import com.example.foodorderingsystem.entity.Order;
 import com.example.foodorderingsystem.repository.OrderRepository;
+import com.example.foodorderingsystem.service.DrinkAdditionService;
+import com.example.foodorderingsystem.service.DrinkService;
+import com.example.foodorderingsystem.service.LunchService;
 import com.example.foodorderingsystem.service.OrderService;
 import com.example.foodorderingsystem.util.exception.EntityNotFoundException;
 import lombok.AccessLevel;
@@ -18,6 +24,9 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderServiceImpl implements OrderService {
 	OrderRepository orderRepository;
+	DrinkAdditionService drinkAdditionService;
+	DrinkService drinkService;
+	LunchService lunchService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -35,8 +44,28 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public Order create(Order newOrder) {
-		return orderRepository.save(newOrder);
+		Order order = orderRepository.save(Order.builder().build());
 
+		Lunch lunch = newOrder.getLunch();
+		if(lunch != null) {
+			lunch = lunchService.findOne(lunch.getId());
+			order.setLunch(lunch);
+		}
+
+		DrinkWithAddition drinkWithAddition = newOrder.getDrinkWithAddition();
+		if(drinkWithAddition != null) {
+			DrinkWithAddition createdDrinkWithAddition = drinkAdditionService.create(drinkWithAddition);
+			Drink drink = drinkWithAddition.getDrink();
+			drink = drinkService.findOne(drink.getId());
+
+			createdDrinkWithAddition.setDrink(drink);
+			createdDrinkWithAddition.setHasLemon(drinkWithAddition.isHasLemon());
+			createdDrinkWithAddition.setHasIce(drinkWithAddition.isHasIce());
+
+			order.setDrinkWithAddition(createdDrinkWithAddition);
+		}
+
+		return order;
 	}
 
 	@Override
@@ -54,5 +83,10 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		return byId.get();
+	}
+
+	@Override
+	public Optional<Order> findById(Long id) {
+		return orderRepository.findById(id);
 	}
 }

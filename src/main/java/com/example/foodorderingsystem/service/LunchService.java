@@ -3,6 +3,7 @@ package com.example.foodorderingsystem.service;
 import com.example.foodorderingsystem.entity.Lunch;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LunchService extends CrudService<Lunch> {
 	List<Lunch> findAll();
@@ -14,4 +15,6 @@ public interface LunchService extends CrudService<Lunch> {
 	Lunch update(Lunch lunchToUpdate);
 
 	Lunch delete(Long id);
+
+	Optional<Lunch> findById(Long id);
 }
