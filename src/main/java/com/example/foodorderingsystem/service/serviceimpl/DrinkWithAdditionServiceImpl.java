@@ -2,7 +2,7 @@ package com.example.foodorderingsystem.service.serviceimpl;
 
 import com.example.foodorderingsystem.entity.DrinkWithAddition;
 import com.example.foodorderingsystem.repository.DrinkAdditionRepository;
-import com.example.foodorderingsystem.service.DrinkAdditionService;
+import com.example.foodorderingsystem.service.DrinkWithAdditionService;
 import com.example.foodorderingsystem.util.exception.EntityNotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DrinkAdditionServiceImpl implements DrinkAdditionService {
+public class DrinkWithAdditionServiceImpl implements DrinkWithAdditionService {
 	DrinkAdditionRepository drinkAdditionRepository;
 	@Override
 	@Transactional(readOnly = true)
@@ -28,7 +28,8 @@ public class DrinkAdditionServiceImpl implements DrinkAdditionService {
 	@Transactional(readOnly = true)
 	public DrinkWithAddition findOne(Long id) {
 		Optional<DrinkWithAddition> byId = drinkAdditionRepository.findById(id);
-		return byId.orElseThrow(() -> new EntityNotFoundException(String.format("DrinkAddition with id %d is not found", id)));
+		return byId.orElseThrow(() -> new EntityNotFoundException(String
+				.format("DrinkAddition with id %d is not found", id)));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class DrinkAdditionServiceImpl implements DrinkAdditionService {
 	public DrinkWithAddition delete(Long id) {
 		Optional<DrinkWithAddition> byId = drinkAdditionRepository.findById(id);
 		if (byId.isEmpty()) {
-			throw new EntityNotFoundException(String.format("DrinkAddition with id %d is not found", id));
+			throw new EntityNotFoundException(String.format("Order with id %d is not found", id));
 		}
 
 		return byId.get();

@@ -3,6 +3,7 @@ package com.example.foodorderingsystem.util.mapper.mapperimpl;
 import com.example.foodorderingsystem.dto.DrinkWithAdditionDto;
 import com.example.foodorderingsystem.entity.Drink;
 import com.example.foodorderingsystem.entity.DrinkWithAddition;
+import com.example.foodorderingsystem.entity.Order;
 import com.example.foodorderingsystem.util.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ public class DrinkAdditionMapper implements Mapper<DrinkWithAddition, DrinkWithA
 	@Override
 	public DrinkWithAddition mapToEntity(DrinkWithAdditionDto dto) {
 		return DrinkWithAddition.builder()
+				.order(Order.builder()
+						.build())
 				.drink(Drink.builder()
 						.id(dto.getDrinkId())
 						.build())

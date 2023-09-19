@@ -5,7 +5,7 @@ import com.example.foodorderingsystem.entity.DrinkWithAddition;
 import com.example.foodorderingsystem.entity.Lunch;
 import com.example.foodorderingsystem.entity.Order;
 import com.example.foodorderingsystem.repository.OrderRepository;
-import com.example.foodorderingsystem.service.DrinkAdditionService;
+import com.example.foodorderingsystem.service.DrinkWithAdditionService;
 import com.example.foodorderingsystem.service.DrinkService;
 import com.example.foodorderingsystem.service.LunchService;
 import com.example.foodorderingsystem.service.OrderService;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderServiceImpl implements OrderService {
 	OrderRepository orderRepository;
-	DrinkAdditionService drinkAdditionService;
+	DrinkWithAdditionService drinkWithAdditionService;
 	DrinkService drinkService;
 	LunchService lunchService;
 
@@ -54,13 +54,14 @@ public class OrderServiceImpl implements OrderService {
 
 		DrinkWithAddition drinkWithAddition = newOrder.getDrinkWithAddition();
 		if(drinkWithAddition != null) {
-			DrinkWithAddition createdDrinkWithAddition = drinkAdditionService.create(drinkWithAddition);
+			DrinkWithAddition createdDrinkWithAddition = drinkWithAdditionService.create(drinkWithAddition);
 			Drink drink = drinkWithAddition.getDrink();
 			drink = drinkService.findOne(drink.getId());
 
 			createdDrinkWithAddition.setDrink(drink);
 			createdDrinkWithAddition.setHasLemon(drinkWithAddition.isHasLemon());
 			createdDrinkWithAddition.setHasIce(drinkWithAddition.isHasIce());
+			createdDrinkWithAddition.setOrder(order);
 
 			order.setDrinkWithAddition(createdDrinkWithAddition);
 		}

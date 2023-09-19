@@ -23,7 +23,6 @@ public class DrinkWithAdditionDto {
 	Long drinkId;
 	@NotNull
 	boolean hasLemon;
-
 	@NotNull
 	boolean hasIce;
 }
